@@ -22,6 +22,14 @@ import SwiftUI
 
 // ScrollView 内，VStack 只占需要的宽度，但 LazyVStack 因为不知道未加载的视图有多宽，所以一开始就占所有宽度
 
+// .scrollDismissesKeyboard
+
+// .scrollIndicators(.hidden) 包括 ScrollView / List / ...
+
+// .defaultScrollAnchor(.bottom)
+
+// .scrollClipDisabled() 让滑动出去的视图不被切，但不响应事件
+
 struct ScrollViewBootcamp: View {
     var body: some View {
         ScrollView {

@@ -1,5 +1,5 @@
 //
-//  GridViewBootcamp.swift
+//  GridBootcamp.swift
 //  bootcamp
 //
 //  Created by Nick Sarno on 1/27/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GridViewBootcamp: View {
+struct GridBootcamp: View {
     var body: some View {
         Grid(alignment: .center, horizontalSpacing: 8, verticalSpacing: 8) {
             ForEach(0..<4) { rowIndex in
@@ -62,5 +62,5 @@ struct GridViewBootcamp: View {
 }
 
 #Preview {
-    GridViewBootcamp()
+    GridBootcamp()
 }

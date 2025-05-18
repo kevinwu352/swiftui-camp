@@ -1,5 +1,5 @@
 //
-//  GridBootcamp.swift
+//  LazyGridBootcamp.swift
 //  bootcamp
 //
 //  Created by Nick Sarno on 1/20/21.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct GridBootcamp: View {
-    
+struct LazyGridBootcamp: View {
+
     let columns: [GridItem] = [
         GridItem(.flexible(), spacing: 6, alignment: nil),
         GridItem(.flexible(), spacing: 6, alignment: nil),
@@ -62,8 +62,8 @@ struct GridBootcamp: View {
     }
 }
 
-struct GridBootcamp_Previews: PreviewProvider {
+struct LazyGridBootcamp_Previews: PreviewProvider {
     static var previews: some View {
-        GridBootcamp()
+        LazyGridBootcamp()
     }
 }
