@@ -28,7 +28,7 @@ struct SheetsBootcamp: View {
 //            SecondScreen()
 //        })
 
-        // >>> 三种实现弹窗的方式
+        // >>> 三种弹窗弹出来的方式
 
         // METHOD 1 - SHEET
         //        .sheet(isPresented: $showNewScreen, content: {
