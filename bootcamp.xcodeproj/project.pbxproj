@@ -85,6 +85,7 @@
 		02FD65F22A16F93B000AEC44 /* MenuBootcamp++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD65F12A16F93B000AEC44 /* MenuBootcamp++++++++.swift */; };
 		0A4F4A3A2DD46BCA000E3A10 /* ButtonStyleBootcamp++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4F4A392DD46BCA000E3A10 /* ButtonStyleBootcamp++++++++.swift */; };
 		0A63EC802DD9A1BC0061AE09 /* ContainerRelativeFrameView++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A63EC7F2DD9A1BC0061AE09 /* ContainerRelativeFrameView++++++++.swift */; };
+		0ACC0CC12DD9E21700E108B4 /* MaskBootcamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC0CC02DD9E21700E108B4 /* MaskBootcamp.swift */; };
 		0AF6827A2D8FDEC7007A6637 /* CustomEnvironment++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF682792D8FDEC7007A6637 /* CustomEnvironment++++++++.swift */; };
 		0AF6827C2D8FDF41007A6637 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF6827B2D8FDF41007A6637 /* ContentView.swift */; };
 /* End PBXBuildFile section */
@@ -170,6 +171,7 @@
 		02FD65F12A16F93B000AEC44 /* MenuBootcamp++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBootcamp++++++++.swift"; sourceTree = "<group>"; };
 		0A4F4A392DD46BCA000E3A10 /* ButtonStyleBootcamp++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyleBootcamp++++++++.swift"; sourceTree = "<group>"; };
 		0A63EC7F2DD9A1BC0061AE09 /* ContainerRelativeFrameView++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContainerRelativeFrameView++++++++.swift"; sourceTree = "<group>"; };
+		0ACC0CC02DD9E21700E108B4 /* MaskBootcamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskBootcamp.swift; sourceTree = "<group>"; };
 		0AF682792D8FDEC7007A6637 /* CustomEnvironment++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomEnvironment++++++++.swift"; sourceTree = "<group>"; };
 		0AF6827B2D8FDF41007A6637 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,6 +218,8 @@
 				0A20B0D22D8BDF11004D4092 /* picker */,
 				0A20B0D02D8BDED9004D4092 /* animation */,
 				0A20B0FE2D8C0CAF004D4092 /* layout */,
+				0ACC0CBF2DD9E1FE00E108B4 /* continued */,
+				0ACC0CC22DD9E21B00E108B4 /* advanced */,
 				0299CD3825ED4A280098C0DC /* OnboardingViews */,
 				026094EE25B0DCD80030E091 /* Assets.xcassets */,
 				026094F325B0DCD80030E091 /* Info.plist */,
@@ -377,6 +381,21 @@
 			path = layout;
 			sourceTree = "<group>";
 		};
+		0ACC0CBF2DD9E1FE00E108B4 /* continued */ = {
+			isa = PBXGroup;
+			children = (
+				0ACC0CC02DD9E21700E108B4 /* MaskBootcamp.swift */,
+			);
+			path = continued;
+			sourceTree = "<group>";
+		};
+		0ACC0CC22DD9E21B00E108B4 /* advanced */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = advanced;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -475,6 +494,7 @@
 				02FD65F02A16F626000AEC44 /* AnimationUpdatedBootcamp++++++++.swift in Sources */,
 				02FD65E42A145C7D000AEC44 /* NavigationStackBootcamp.swift in Sources */,
 				0260952525B253960030E091 /* ShapesBootcamp++++++++.swift in Sources */,
+				0ACC0CC12DD9E21700E108B4 /* MaskBootcamp.swift in Sources */,
 				026FB4A125BA0838005B3661 /* ButtonsBootcamp++++++++.swift in Sources */,
 				0299CD3A25ED4A700098C0DC /* IntroView.swift in Sources */,
 				026FB51925BBA287005B3661 /* AnimationTimingBootcamp-outdated.swift in Sources */,
