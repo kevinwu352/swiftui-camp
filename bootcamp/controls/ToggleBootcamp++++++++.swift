@@ -68,3 +68,9 @@ struct ToggleAdvanced: View {
         }
     }
 }
+
+
+// >>> 注意这 toggle 点击的时候关不掉
+// Toggle(isOn: .constant(true)) {
+//     Text("Show advanced options")
+// }

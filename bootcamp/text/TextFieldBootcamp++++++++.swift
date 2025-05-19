@@ -14,6 +14,12 @@ import SwiftUI
 //    format: .name(style: .medium)
 //)
 
+// .submitLabel(.join)
+
+// .textFieldStyle(.roundedBorder)
+
+// .disableAutocorrection(true)
+
 struct TextFieldBootcamp: View {
 
     @State var textFieldText: String = ""

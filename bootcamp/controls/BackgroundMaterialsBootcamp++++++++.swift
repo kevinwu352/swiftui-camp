@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+// >>> blur 是把自己搞模糊？
+// Image("dog")
+//     .resizable()
+//     .frame(width: 300, height: 300)
+//     .blur(radius: 20)
+
 struct BackgroundMaterialsBootcamp: View {
     var body: some View {
         VStack {

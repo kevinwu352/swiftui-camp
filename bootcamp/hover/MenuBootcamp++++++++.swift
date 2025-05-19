@@ -9,6 +9,16 @@ import SwiftUI
 
 struct MenuBootcamp: View {
     // >>> 原生的弹窗菜单，从被点击的某个位置弹出来，无尖尖
+
+    // 点击的时候执行 primaryAction，长按会弹出三个选项
+//    Menu("Options") {
+//        Button("Order Now", action: placeOrder)
+//        Button("Adjust Order", action: adjustOrder)
+//        Button("Cancel", action: cancelOrder)
+//    } primaryAction: {
+//        justDoIt()
+//    }
+
     var body: some View {
 //        Menu("Click me!") {
 //            Button("One") {

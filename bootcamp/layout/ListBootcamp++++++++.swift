@@ -28,6 +28,14 @@ import SwiftUI
 // .scrollContentBackground(.hidden) // 感觉主要用在 group 类型的时候，好像 plain 后面没颜色
 // .background(.purple)
 
+// 设置每行背景
+// .listRowBackground(Color.blue)
+
+// listRowSeparator() for controlling whether separators are visible or not
+// listRowSeparatorTint() for controlling the separator color.
+
+// swipeActions 的第一个会在长滑的时候执行，除非手动关闭这功能 allowsFullSwipe: false
+
 struct ListBootcamp: View {
     
     @State var fruits: [String] = [

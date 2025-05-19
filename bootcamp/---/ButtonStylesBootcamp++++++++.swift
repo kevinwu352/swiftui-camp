@@ -11,6 +11,8 @@ struct ButtonStylesBootcamp: View {
     var body: some View {
         VStack {
 
+            // >>> 改变按钮颜色，赋 role 或 .tint
+
             Button { } label: {
                 Text("automatic")
                     .frame(height: 55)
