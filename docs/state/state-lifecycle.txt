@@ -1,0 +1,245 @@
+PlayButton 显隐
+
+struct PlayButton: View {
+    @State var playing = false
+    let uuid = UUID().uuidString
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack {
+            Button(playing.description) {
+                playing.toggle()
+            }
+            Text(uuid).font(.caption)
+        }
+    }
+}
+struct ContentView: View {
+    @State var shown = true
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack(spacing: 50) {
+            VStack {
+                Toggle(isOn: $shown) {
+                    Text("Show Button")
+                }
+                if shown {
+                    PlayButton()
+                }
+            }
+            .padding(.horizontal)
+            .background(Color.gray.opacity(0.5))
+        }
+    }
+}
+
+初始化时
+ContentView: @self, @identity, _shown changed.
+PlayButton: @self, @identity, _playing changed.
+点播放按钮时
+PlayButton: _playing changed. // 只有PlayButton需要重新计算body
+隐藏按钮时
+ContentView: _shown changed. // 只有ContentView需要重新计算body
+显示按钮时
+ContentView: _shown changed.
+PlayButton: @self, @identity, _playing changed.
+
+
+
+struct PlayButton: View {
+    @State var playing = false
+    let uuid = UUID().uuidString
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack {
+            Button(playing.description) {
+                playing.toggle()
+            }
+            Text(uuid).font(.caption)
+        }
+    }
+}
+struct CountText : View {
+    let count: Int
+    let uuid = UUID().uuidString
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack {
+            Text(count.description)
+            Text(uuid).font(.caption)
+        }
+    }
+}
+struct ContentView: View {
+    @State var shown = true
+    @State var count = 0
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack(spacing: 50) {
+            VStack {
+                Toggle(isOn: $shown) {
+                    Text("Show Button")
+                }
+                if shown {
+                    PlayButton()
+                }
+            }
+            .padding(.horizontal)
+            .background(Color.gray.opacity(0.5))
+
+            VStack {
+                Button("+++") {
+                    count += 1
+                }
+                CountText(count: count)
+            }
+            .padding(.horizontal)
+            .background(Color.gray.opacity(0.5))
+        }
+    }
+}
+
+初始化时
+ContentView: @self, @identity, _shown, _count changed.
+CountText: @self changed.                       // 为何没有 @identity？它目前是个有死属性但无状态的视图，它创建和重建都这样
+PlayButton: @self, @identity, _playing changed.
+点增加按钮时
+ContentView: _count changed.
+PlayButton: @self changed. // 重建，内部的 uuid 变了，但 @State playing 没变
+CountText: @self changed.  // 重建，内部的 uuid 变了
+
+
+
+文中有些结论
+*** 视图的 value 不等于视图的 identity ***
+*** State 的生命周期等于视图的生命周期 ***
+
+他说的视图的 value，估计是指视图内部的 let count: Int 这种常量值，视图初始化时传进去的
+
+
+
+到 @Observable 就有些怪了
+
+@Observable class ViewModel {
+    var isEnabled = false
+    var uuid = UUID().uuidString
+    @ObservationIgnored
+    var now = Date()
+    init() {
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("vm init \(address)")
+    }
+    deinit {
+        let address = Unmanaged.passUnretained(self).toOpaque()
+        print("vm       deinit \(address)")
+    }
+}
+struct PlayButton: View {
+    @State var vm = ViewModel()
+    @State var playing = false
+    let uuid = UUID().uuidString
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack {
+            Button(playing.description) {
+                playing.toggle()
+            }
+            Text(uuid).font(.caption)
+            Text(vm.uuid).font(.caption).foregroundStyle(Color.red)
+            Text(vm.now.description).font(.caption).foregroundStyle(Color.red)
+        }
+    }
+}
+struct CountText : View {
+    let count: Int
+    let uuid = UUID().uuidString
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack {
+            Text(count.description)
+            Text(uuid).font(.caption)
+        }
+    }
+}
+struct ContentView: View {
+    @State var shown = true
+    @State var count = 0
+    var body: some View {
+        let _ = Self._printChanges()
+        VStack(spacing: 50) {
+            VStack {
+                Toggle(isOn: $shown) {
+                    Text("Show Button")
+                }
+                if shown {
+                    PlayButton()
+                }
+            }
+            .padding(.horizontal)
+            .background(Color.gray.opacity(0.5))
+
+            VStack {
+                Button("+++") {
+                    count += 1
+                }
+                CountText(count: count)
+            }
+            .padding(.horizontal)
+            .background(Color.gray.opacity(0.5))
+        }
+    }
+}
+
+初始化时
+ContentView: @self, @identity, _shown, _count changed.
+vm init 0x0000600001735880
+CountText: @self changed.
+PlayButton: @self, @identity, _vm, _playing changed.
+显示/隐藏 按钮时，vm 生命周期正常，跟着创建和销毁
+点击增加按钮时，就不同了
+ContentView: _count changed.
+vm init 0x0000600001710200 // 创建了一个新的，且没被用到，在背后像鬼魅一样。这个叫：identity 未变更时视图的重建，建了新的 vm
+PlayButton: @self changed.
+CountText: @self changed.
+总结一下：count 的改变，导致播放按钮重建，它内部的 @State playing 保留了，它内部的非状态 uuid 变化了，vm 也是状态，虽然新建了一个 vm，但界面上用的还是旧的，这新建的真的像鬼魅一样，不知道来干嘛的
+再点一下增加
+ContentView: _count changed.
+vm init 0x000060000172c700 // 创建了一个新的
+vm       deinit 0x0000600001710200 // 上次创建的在这里销毁了
+PlayButton: @self changed.
+CountText: @self changed.
+隐藏播放按钮
+界面上用的 vm，背后不断新建销毁的备胎 vm，都释放掉了
+
+
+
+重点 Binding
+
+CountText 本来是无状态的，只有死属性。把它的死属性改成 @Binding
+// let count: Int
+   @Binding var count: Int
+
+点击增加按钮时
+CountText: _count changed.
+
+本来该这样的
+ContentView: _count changed.
+vm init 0x0000600001730e80
+PlayButton: @self changed.
+CountText: @self changed.
+
+ContentView: _count changed.
+vm init 0x0000600001700980
+vm       deinit 0x0000600001730e80
+PlayButton: @self changed.
+CountText: @self changed.
+
+总结：本来是 ContentView 变化，进而导致一堆视图重建。变成了 CountText 内部变化，就和 PlayButton: _playing changed. 一样。
+感觉给它 @Binding 一个值，就像是在它里面写了个 @State 一样，而且内部的 uuid 也没变，因为没有重建
+
+所以，@Binding 时，它只是重新计算了 CountText.body 的值，而不是重建实例再计算 body
+
+
+
+
+
+

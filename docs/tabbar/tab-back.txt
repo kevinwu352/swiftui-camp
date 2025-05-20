@@ -1,0 +1,84 @@
+//            NavigationStack(path: $rt.homePath) {
+//                NavContentView {
+//                    HomeView()
+//                }
+//                .loadRoutes()
+////                HomeView()
+////                    .loadRoutes()
+//            }
+//            .tabItem {
+//                Image(systemName: TabBarItem.home.icon)
+//                Text(TabBarItem.home.title)
+//            }
+//            .tag(TabBarItem.home)
+//
+//            NavigationStack(path: $rt.marketPath) {
+//                NavContentView {
+//                    MarketView()
+//                }
+//                .loadRoutes()
+////                MarketView()
+////                    .loadRoutes()
+//            }
+//            .tabItem {
+//                Image(systemName: TabBarItem.market.icon)
+//                Text(TabBarItem.market.title)
+//            }
+//            .tag(TabBarItem.market)
+
+            NavStack(path: $rt.walletPath) {
+//                NavContentView {
+//                    WalletView()
+//                }
+//                .loadRoutes()
+                WalletView()
+//                    .navigationDestination(for: Routes.self) { r in
+//                        NavContentView {
+//                            switch r {
+//                            case .home: HomeView()
+//                            case .settings: SettingsView()
+//                            case .market: MarketView()
+//                            case .wallet: WalletView()
+//                            }
+//                        }
+//                    }
+//                    .navDestination(for: Routes.self) { $0.view }
+//                    .loadRoutes()
+                    .navigationDestination(for: Routes.self) { route in
+                        NavContentView {
+                            route.view
+                        }
+                    }
+            }
+//            .tabItem {
+//                Image(systemName: TabBarItem.wallet.icon)
+//                Text(TabBarItem.wallet.title)
+//            }
+//            .tag(TabBarItem.wallet)
+        }
+
+//        ZStack(alignment: .bottom) {
+//            TabView(selection: $selection) {
+//                NavStack(path: $router.homePath) {
+//                    HomeView()
+//                        .loadRoutes()
+//                }
+//                .tag(TabBarItem.home)
+//                .toolbar(.hidden, for: .tabBar)
+//
+//                NavStack(path: $router.marketPath) {
+//                    MarketView()
+//                        .loadRoutes()
+//                }
+//                .tag(TabBarItem.market)
+//                .toolbar(.hidden, for: .tabBar)
+//
+//                NavStack(path: $router.walletPath) {
+//                    WalletView()
+//                        .loadRoutes()
+//                }
+//                .tag(TabBarItem.wallet)
+//                .toolbar(.hidden, for: .tabBar)
+//            }
+//            TabBarView(selection: $selection)
+//        }

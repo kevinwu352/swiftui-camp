@@ -1,0 +1,21 @@
+
+
+Localizable.strings
+Localizable.stringsdict
+
+InfoPlist.strings
+  CFBundleDisplayName
+  NSAppleMusicUsageDescription
+  NSCameraUsageDescription
+
+"my name is %@" = "my name is %@ [e]";
+"my name is \(name)"
+
+"I have %lld apples" = "I have %lld apples [e]";
+"I have \(amount) apples"
+
+"I have %lf dollars"
+
+Markdown
+"**Hello** %lld ~~world~~" = "**Hello** %lld ~~world~~ [ee]";
+"**Hello** \(year) ~~world~~"

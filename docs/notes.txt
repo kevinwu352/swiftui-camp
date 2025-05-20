@@ -1,0 +1,91 @@
+
+
+@globalActor
+actor MyActor {
+    static let shared = MyActor()
+}
+
+
+Preview dir
+/Users/kevin/Library/Developer/Xcode/UserData/Previews/Simulator Devices/1BC34D36-29AC-45B3-B44E-B8961F6EAB0B/data/Containers/Data/Application/232A9D4A-C1F6-4AE1-9E3F-DD988CA073FC
+
+
+
+Hosting View
+  LazyView<ContentView>
+    ContentView
+      Text
+
+Text("god")
+  hosting 全屏，其它都小
+
+Text("god")
+  .position(x: 50, y: 50)
+  .background(Color.green)  // 颜色在 hosting 上面，且全屏
+  hosting 全屏，lazy 和 content 在安全区内，其它都小
+
+
+
+设置 separator insets
+List {
+    ForEach(0..<50) { i in
+        HStack {
+            Image(systemName: "heart.fill")
+                .frame(width: 50, height: 50)
+                .background(Color.gray)
+            Text("\(i)")
+                .frame(maxWidth: .infinity)
+                .background(Color.gray)
+                .alignmentGuide(.listRowSeparatorLeading) {
+                    $0[.leading]
+                }
+                .alignmentGuide(.listRowSeparatorTrailing) {
+                    $0[.trailing]
+                }
+        }
+    }
+}
+.listStyle(.plain)
+
+
+
+@Observable 有两成员，当 body 里用到 aaa，但我改变 bbb 时，不会刷新界面，body 也不会调用；当 aaa 多次赋相同值时，body 也会调用多次
+ObservableObject，body 里用到 aaa，但我改变 bbb 时，界面会刷新；当 aaa 多次赋相同值时，body 也会调用多次
+
+
+extension EnvironmentValues {
+    @Entry var switcher = LoginSwitcher()
+}
+class LoginSwitcher {
+    var god = 101
+}
+@Entry 后面的部分不是 Sendable，居然没报错
+
+
+
+异步的 getter
+var value: Success { get async throws }
+var contents: T {
+    get async throws {
+        // ...
+    }
+}
+
+
+以后把 default 改成 @unknown default
+switch error {
+case .short:
+    print("Your password was too short.")
+case .obvious:
+    print("Your password was too obvious.")
+@unknown default:
+    print("Your password wasn't suitable.")
+}
+
+========================================
+
+
+
+
+
+
