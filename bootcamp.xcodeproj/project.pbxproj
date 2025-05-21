@@ -83,6 +83,7 @@
 		02FD65EC2A16EB39000AEC44 /* GroupBootcamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD65EB2A16EB39000AEC44 /* GroupBootcamp.swift */; };
 		02FD65F02A16F626000AEC44 /* AnimationUpdatedBootcamp++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD65EF2A16F626000AEC44 /* AnimationUpdatedBootcamp++++++++.swift */; };
 		02FD65F22A16F93B000AEC44 /* MenuBootcamp++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD65F12A16F93B000AEC44 /* MenuBootcamp++++++++.swift */; };
+		0A2B9A612DDD6182004A89D7 /* SubscriptionBootcamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2B9A602DDD6176004A89D7 /* SubscriptionBootcamp.swift */; };
 		0A4F4A3A2DD46BCA000E3A10 /* ButtonStyleBootcamp++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4F4A392DD46BCA000E3A10 /* ButtonStyleBootcamp++++++++.swift */; };
 		0A63EC802DD9A1BC0061AE09 /* ContainerRelativeFrameView++++++++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A63EC7F2DD9A1BC0061AE09 /* ContainerRelativeFrameView++++++++.swift */; };
 		0ACC0CC12DD9E21700E108B4 /* MaskBootcamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACC0CC02DD9E21700E108B4 /* MaskBootcamp.swift */; };
@@ -170,6 +171,7 @@
 		02FD65EB2A16EB39000AEC44 /* GroupBootcamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupBootcamp.swift; sourceTree = "<group>"; };
 		02FD65EF2A16F626000AEC44 /* AnimationUpdatedBootcamp++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AnimationUpdatedBootcamp++++++++.swift"; sourceTree = "<group>"; };
 		02FD65F12A16F93B000AEC44 /* MenuBootcamp++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MenuBootcamp++++++++.swift"; sourceTree = "<group>"; };
+		0A2B9A602DDD6176004A89D7 /* SubscriptionBootcamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionBootcamp.swift; sourceTree = "<group>"; };
 		0A4F4A392DD46BCA000E3A10 /* ButtonStyleBootcamp++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ButtonStyleBootcamp++++++++.swift"; sourceTree = "<group>"; };
 		0A63EC7F2DD9A1BC0061AE09 /* ContainerRelativeFrameView++++++++.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContainerRelativeFrameView++++++++.swift"; sourceTree = "<group>"; };
 		0ACC0CC02DD9E21700E108B4 /* MaskBootcamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskBootcamp.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 			children = (
 				0ACC0CC02DD9E21700E108B4 /* MaskBootcamp.swift */,
 				0ACC0CC32DD9EEBC00E108B4 /* MultipleSheetsBootcamp.swift */,
+				0A2B9A602DDD6176004A89D7 /* SubscriptionBootcamp.swift */,
 			);
 			path = continued;
 			sourceTree = "<group>";
@@ -531,6 +534,7 @@
 				0264C5CF2AB8E0730033070B /* ViewThatFitsBootcamp++++++++.swift in Sources */,
 				026FB51625BB9273005B3661 /* AnimationBootcamp-outdated.swift in Sources */,
 				026FB48D25B8EEBE005B3661 /* LazyGridBootcamp++++++++.swift in Sources */,
+				0A2B9A612DDD6182004A89D7 /* SubscriptionBootcamp.swift in Sources */,
 				0AF6827A2D8FDEC7007A6637 /* CustomEnvironment++++++++.swift in Sources */,
 				0A4F4A3A2DD46BCA000E3A10 /* ButtonStyleBootcamp++++++++.swift in Sources */,
 				02D1340E25BF7A210087A0C2 /* NavigationViewBootcamp.swift in Sources */,
