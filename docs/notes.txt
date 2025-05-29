@@ -1,10 +1,23 @@
 
-
-@globalActor
-actor MyActor {
-    static let shared = MyActor()
+https://www.hackingwithswift.com/swift/5.3/atmain
+以前把 main.swift 当成入口，后来增加了 @main
+此时，main 函数必须存在，但能写成异步同步等不同形式
+@main
+struct Main {
+    static func main() async throws {
+        print("hehe")
+    }
 }
 
+以后把 default 改成 @unknown default
+switch error {
+case .short:
+    print("Your password was too short.")
+case .obvious:
+    print("Your password was too obvious.")
+@unknown default:
+    print("Your password wasn't suitable.")
+}
 
 Preview dir
 /Users/kevin/Library/Developer/Xcode/UserData/Previews/Simulator Devices/1BC34D36-29AC-45B3-B44E-B8961F6EAB0B/data/Containers/Data/Application/232A9D4A-C1F6-4AE1-9E3F-DD988CA073FC
@@ -60,28 +73,6 @@ class LoginSwitcher {
     var god = 101
 }
 @Entry 后面的部分不是 Sendable，居然没报错
-
-
-
-异步的 getter
-var value: Success { get async throws }
-var contents: T {
-    get async throws {
-        // ...
-    }
-}
-
-
-以后把 default 改成 @unknown default
-switch error {
-case .short:
-    print("Your password was too short.")
-case .obvious:
-    print("Your password was too obvious.")
-@unknown default:
-    print("Your password wasn't suitable.")
-}
-
 ========================================
 
 
