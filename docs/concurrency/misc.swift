@@ -1,9 +1,20 @@
 
+// Task 优先级
 // The highest priority is .high, which is synonymous with the old .userInitiated priority from Grand Central Dispatch (GCD). As the name implies, this should be used only for tasks that the user specifically started and is actively waiting for.
 // Next highest is .medium, which is a great choice for most of your tasks that the user isn’t actively waiting for.
 // Next is .low, which is synonymous with the old .utility priority from GCD. This is the best choice for anything long enough to require a progress bar to be displayed, such as copying files or importing data.
 // The lowest priority is .background, which is for any work the user can’t see, such as building a search index. This could in theory take hours to complete.
 
+// 哪些 Sendable
+// All of Swift’s core value types, including Bool, Int, String, and similar.
+// Optionals, where the wrapped data is a value type.
+// Standard library collections that contain value types, such as Array<String> or Dictionary<Int, String>.
+// Tuples where the elements are all value types.
+// Metatypes, such as String.self.
+
+// Actors automatically conform to Sendable because they handle their synchronization internally.
+// Custom structs and enums you define will also automatically conform to Sendable if they contain only values that also conform to Sendable, similar to how Codable works.
+// Custom classes can conform to Sendable as long as they either inherits from NSObject or from nothing at all, all properties are constant and themselves conform to Sendable, and they are marked as final to stop further inheritance.
 
 @globalActor
 actor MyActor {
@@ -11,7 +22,7 @@ actor MyActor {
 }
 
 
-// 异步的 getter
+// 异步的 getter，只能只读，加 setter 会出错
 var value: Success { get async throws }
 var contents: T {
     get async throws {
@@ -55,3 +66,83 @@ func doit() async {
         print("Task was cancelled.")
     }
 }
+
+// task group 示例
+func doit() async {
+    //let string = await withTaskGroup(of: String.self) { group -> String in
+    let string = await withTaskGroup { group in // 能推断出来，用这精简版
+        group.addTask { "Hello" }
+        group.addTask { "From" }
+        group.addTask { "A" }
+        group.addTask { "Task" }
+        group.addTask { "Group" }
+
+        var collected = [String]()
+
+        for await value in group {
+            collected.append(value)
+        }
+
+        return collected.joined(separator: " ")
+    }
+
+    print(string)
+}
+// async let 示例
+func printUserDetails() async {
+    async let username = getUser()
+    async let scores = getHighScores()
+    async let friends = getFriends()
+
+    let user = await UserData(name: username, friends: friends, highScores: scores)
+    print("Hello, my name is \(user.name), and I have \(user.friends.count) friends!")
+}
+func getFriends() async -> [String] {
+    do {
+        try await Task.sleep(for: .seconds(2.0))
+        print("111")
+        return ["Eric", "Maeve", "Otis"]
+    } catch {
+        print("222") // 如果上面不 await UserData()，会 cancel 掉，走到这里
+        return []
+    }
+}
+func printUserDetails() async {
+    async let nums = getNums() // 这俩函数能抛出异常，但此时不 try，也不用 await
+    async let ages = getAges()
+    do {
+        let list = try await nums + ages // 这里 try await
+        print(list)
+    } catch {
+        print("err")
+    }
+}
+// async let 一种等待的方式
+return await (news, weather, hasUpdate)
+
+
+// completion 和 async 方法能同名
+func doit() async {
+    let list = await fetchLatestNews()
+    print(list)
+    fetchLatestNews { ls in
+        print(ls)
+    }
+}
+func fetchLatestNews(completion: sending @escaping ([String]) -> Void) {
+    DispatchQueue.main.async {
+        completion(["11", "22"])
+    }
+}
+func fetchLatestNews() async -> [String] {
+    return ["aa", "bb"]
+}
+
+
+// CheckedContinuation<String, Never>
+// UnsafeContinuation<[Int], Error>
+// 有些功能的回调是通过 delegate，且两个函数，这时可以把 continuation 存下来，然后在那两个函数里面调用
+// try await withCheckedThrowingContinuation { continuation in
+//     locationContinuation = continuation
+//     manager.requestLocation()
+// }

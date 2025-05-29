@@ -8,6 +8,7 @@ struct Main {
         print("hehe")
     }
 }
+main.swift 里在顶层能直接写异步调用，await some_func()
 
 以后把 default 改成 @unknown default
 switch error {
