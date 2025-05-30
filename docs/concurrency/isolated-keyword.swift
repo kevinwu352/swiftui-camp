@@ -7,11 +7,13 @@ actor BankAccount {
     }
 }
 // isolated 关键字能把 deposit 函数归属为自己，所以函数内部能访问修改 BankAccount 内部的值
-func deposit(amount: Double, to account: isolated BankAccount) {
+func deposit(amount: Double, to account: isolated BankAccount) { // 不能有两个 isolated 参数
     assert(amount >= 0)
     account.balance = account.balance + amount
 }
-
+let ba = BankAccount(accountNumber: 1, initialDeposit: 2)
+await deposit(amount: 2, to: ba)
+// deposit 方法虽不是 async，这里也要 await
 
 
 
