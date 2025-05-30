@@ -5,6 +5,11 @@
 // Next is .low, which is synonymous with the old .utility priority from GCD. This is the best choice for anything long enough to require a progress bar to be displayed, such as copying files or importing data.
 // The lowest priority is .background, which is for any work the user can’t see, such as building a search index. This could in theory take hours to complete.
 
+// Task 优先级提升：
+// 1)高优先级任务等待低优先级任务，低任务的优先级会提升
+// 2)低优先级任务运行于某 actor，此时高优先级任务入队了，低任务的优先级会提升
+
+
 // 哪些 Sendable
 // All of Swift’s core value types, including Bool, Int, String, and similar.
 // Optionals, where the wrapped data is a value type.
@@ -15,6 +20,11 @@
 // Actors automatically conform to Sendable because they handle their synchronization internally.
 // Custom structs and enums you define will also automatically conform to Sendable if they contain only values that also conform to Sendable, similar to how Codable works.
 // Custom classes can conform to Sendable as long as they either inherits from NSObject or from nothing at all, all properties are constant and themselves conform to Sendable, and they are marked as final to stop further inheritance.
+
+// group 适合不定数量
+// task 和 group 能显式 cancel，async let 不行
+// task 创建后能存起来，async let 不行
+// group 返回类型要相同，能用 enum 规避
 
 @globalActor
 actor MyActor {
@@ -68,6 +78,7 @@ func doit() async {
 }
 
 // task group 示例
+// withDiscardingTaskGroup 是一种自动丢弃 task 的 group
 func doit() async {
     //let string = await withTaskGroup(of: String.self) { group -> String in
     let string = await withTaskGroup { group in // 能推断出来，用这精简版
@@ -119,6 +130,22 @@ func printUserDetails() async {
 }
 // async let 一种等待的方式
 return await (news, weather, hasUpdate)
+// 注意理解这里 user 不能发送，理解这个编译错误，目前我也不太懂
+class User {
+    let name: String
+    let password: String
+    init(name: String, password: String) {
+        self.name = name
+        self.password = password
+    }
+}
+@main
+struct App {
+    static func main() async {
+        async let user = User(name: "twostraws", password: "fr0st1es") // 这里出错
+        await print(user.name)
+    }
+}
 
 
 // completion 和 async 方法能同名
