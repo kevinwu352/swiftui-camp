@@ -1,9 +1,3 @@
-//
-//  main.swift
-//  cli
-//
-//  Created by Kevin Wu on 5/29/25.
-//
 
 import Foundation
 import QuartzCore

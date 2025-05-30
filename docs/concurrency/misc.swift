@@ -31,7 +31,6 @@ actor MyActor {
     static let shared = MyActor()
 }
 
-
 // 异步的 getter，只能只读，加 setter 会出错
 var value: Success { get async throws }
 var contents: T {
@@ -71,11 +70,15 @@ func doit() async {
         // print(res)
         // let result = try await task.value
         // print("Result: \(result)")
-        print("222") // 上面一定会异常，但如果这里不访问 task.value，就不会走到 catch 里面，直接是：222 和 Starting
+        // 上面一定会异常，但如果这里不访问 task.value，就不会走到 catch 里面，直接是：222 和 Starting
+        // try await task.value 用于重新抛出 task 里面的异常，如果不访问则不会往外抛了
+        print("222")
     } catch {
         print("Task was cancelled.")
     }
 }
+
+
 
 // task group 示例
 // withDiscardingTaskGroup 是一种自动丢弃 task 的 group
@@ -89,14 +92,11 @@ func doit() async {
         group.addTask { "Group" }
 
         var collected = [String]()
-
         for await value in group {
             collected.append(value)
         }
-
         return collected.joined(separator: " ")
     }
-
     print(string)
 }
 // async let 示例
@@ -124,13 +124,13 @@ func printUserDetails() async {
     do {
         let list = try await nums + ages // 这里 try await
         print(list)
+        // async let 的另一种等待的方式
+        // return await (news, weather, hasUpdate)
     } catch {
         print("err")
     }
 }
-// async let 一种等待的方式
-return await (news, weather, hasUpdate)
-// 注意理解这里 user 不能发送，理解这个编译错误，目前我也不太懂
+// 这里 user 不能发送，注意理解这个编译错误，目前我也不太懂
 class User {
     let name: String
     let password: String

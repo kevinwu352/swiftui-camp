@@ -1,28 +1,22 @@
-//
-//  main.swift
-//  cli
-//
-//  Created by Kevin Wu on 5/29/25.
-//
 
 import Foundation
 
 // 顶层环境是在主线程的
-//print("111")
-//MainActor.assertIsolated()
-//print("222")
+print("111")
+MainActor.assertIsolated()
+print("222")
 
 // Task 继承了父的，所以也在主线程
 // ***如果后面不 sleep 一会，这里面不会执行***
-//Task {
-//    print("333")
-//    MainActor.assertIsolated()
-//    print("444")
-//}
-// try await Task.sleep(for: .seconds(1))
+Task {
+   print("333")
+   MainActor.assertIsolated()
+   print("444")
+}
+try await Task.sleep(for: .seconds(1))
 
 // 但注意这里，不在主线程
-// Task 会继承父的，但是这方法没继承
+// Task 会继承父的，但是这里是方法，方法没继承父的
 func couldBeAnywhere() async {
     // MainActor.assertIsolated() // 不在主线程
     let result = await MainActor.run {
@@ -32,7 +26,7 @@ func couldBeAnywhere() async {
     // MainActor.assertIsolated() // 不在主线程
     print(result)
 }
-//await couldBeAnywhere()
+await couldBeAnywhere()
 
 
 
@@ -76,16 +70,18 @@ class ViewModel {
     }
 }
 // 1 2 4 5 3
-//let model = ViewModel()
-//await model.runTest()
-//try await Task.sleep(for: .seconds(0.1))
+let model = ViewModel()
+await model.runTest()
+try await Task.sleep(for: .seconds(0.1))
 
 
 // 如果我明确说明我要在主，才会在主上执行我
 // @MainActor
 func downloadData() async {
     print("333")
-    MainActor.assertIsolated() // 调用我的地方在主，且我也没说我要在哪，所以 swift 会自己决定在哪执行我，swift 选择了在非主执行我
+    // 虽然调用我的地方在主，但我没说我要在哪
+    // 所以 swift 自己决定在哪执行我，swift 选择了在非主执行我，而且，非常有可能选择非主
+    MainActor.assertIsolated()
     print("444")
 }
 func couldBeAnywhere3() {
