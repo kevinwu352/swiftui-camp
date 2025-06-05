@@ -74,6 +74,37 @@ class LoginSwitcher {
     var god = 101
 }
 @Entry 后面的部分不是 Sendable，居然没报错
+
+
+
+
+设背景色，Shape 上用 .fill(.red)，其它用 background(.red)
+    Rectangle()
+        // .fill(Color.purple)
+        // .frame(width: 100, height: 100)
+        .frame(width: 200, height: 200)
+        .background(Color.red)
+    直接设置背景色不行，先 fill 后 frame，再 frame 再 background
+
+    Circle()
+        .strokeBorder(.blue, lineWidth: 20) 画在内部
+        //.stroke(.blue, lineWidth: 20) 骑在线上
+        .frame(width: 100, height: 100)
+        //.border(Color.yellow, width: 20) 画出正方形，不能用这个
+
+// 感觉这是终极答案
+    Image(.cart1)
+        //.clipShape(RoundedRectangle(cornerRadius: 20)) // 后切会切掉阴影
+        .background(
+            RoundedRectangle(cornerRadius: 20)          // 圆角
+                .fill(Color.green)                      // 背景色
+                .strokeBorder(Color.red, lineWidth:4)   // 边框
+                .shadow(color: .red, radius: 5)         // 阴影
+                //.fill(.green.shadow(.drop(color: .red, radius: 5))) // 阴影还能直接加到颜色上面
+        )
+
+    //.clipShape(RoundedRectangle(cornerRadius: 20))
+    //.shadow(color: .red, radius: 5) // 后加的阴影不会被切掉
 ========================================
 
 

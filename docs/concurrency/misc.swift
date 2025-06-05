@@ -26,6 +26,10 @@
 // task 创建后能存起来，async let 不行
 // group 返回类型要相同，能用 enum 规避
 
+// 结构化并发，async let / TaskGroup，父任务等子任务执行完成
+// 非结构化并发，Task，继承当前环境的一些属性（actor/Task Local Values/priority），它不是子任务，当前函数结束后，它还能运行
+// 非结构化并发，Task.detached，不继承，完全脱离，放飞自我，大佬们建议不要用
+
 @globalActor
 actor MyActor {
     static let shared = MyActor()
@@ -107,6 +111,8 @@ func printUserDetails() async {
 
     let user = await UserData(name: username, friends: friends, highScores: scores)
     print("Hello, my name is \(user.name), and I have \(user.friends.count) friends!")
+    // 如果不等那三个 async let 的话，函数走到这里会取消那三个，但是如果那三个收到取消通知但不立即完成
+    // 据说这里会继续等待它们完成。Donny Wals 说的，没验证
 }
 func getFriends() async -> [String] {
     do {
@@ -115,6 +121,9 @@ func getFriends() async -> [String] {
         return ["Eric", "Maeve", "Otis"]
     } catch {
         print("222") // 如果上面不 await UserData()，会 cancel 掉，走到这里
+        // 正因为上面不 await 这里会 cancel，所以如果想启动一个异步任务，不等它的结果，结束函数，就不能用 async let，要用 Task
+        // async let 会创建一个 Task，超出范围后会 cancel
+        // async let creates a child task of your current task under the hood, this task is cancelled whwnever the function it's created in goes out of scope
         return []
     }
 }
@@ -173,3 +182,26 @@ func fetchLatestNews() async -> [String] {
 //     locationContinuation = continuation
 //     manager.requestLocation()
 // }
+
+
+
+// Donny Wals 的一个示例，不错
+func refreshToken() async throws -> Token {
+    if let refreshTask = refreshTask {
+        // 大家等在这里，确保只有一个刷新任务在执行
+        return try await refreshTask.value
+    }
+    let task = Task { () throws -> Token in
+        // 看看如何置空已完成任务的
+        // 试了，这样置空真的行
+        defer { refreshTask = nil }
+
+        let tokenExpiresAt = Date().addingTimeInterval(10)
+        let newToken = Token(validUntil: tokenExpiresAt, id: UUID())
+        currentToken = newToken
+
+        return newToken
+    }
+    self.refreshTask = task
+    return try await task.value
+}

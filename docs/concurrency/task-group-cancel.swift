@@ -20,6 +20,7 @@ func printMessage() async {
         group.addTask { "Testing" }
         group.addTask { "Group" }
         group.addTask {
+            // 不用 weak self
             // try Task.checkCancellation()
             return "Cancellation"
         }

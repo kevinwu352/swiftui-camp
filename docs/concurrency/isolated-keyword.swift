@@ -58,3 +58,33 @@ func run() {
         per.name = "bb"
     }
 }
+
+
+// 如果你百分百确定是安全的，你可以用 nonisolated(unsafe)，告诉编译器，这是有意的，这不会造成数据竞争
+// with a global variable
+nonisolated(unsafe) var myVariable = UUID()
+// or as a static property
+struct CharacterMaker {
+    nonisolated(unsafe) static var myVariable = UUID()
+    // ...
+}
+
+
+
+// 6.2 新特性：无环境对象上的 同步异步 方法都会在当前环境执行
+class NetworkingClient {
+    func loadUsers1() async -> [Int] {
+        return []
+    }
+    func loadUsers2() -> [Int] {
+        []
+    }
+}
+@MainActor
+class ContentViewModel {
+    let network = NetworkingClient()
+    func doit() async {
+        await network.loadUsers1() // 这里要报错的，试一下
+        _ = network.loadUsers2()
+    }
+}

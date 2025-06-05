@@ -104,6 +104,13 @@ let stream = AsyncStream(bufferingPolicy: .bufferingOldest(0)) { continuation in
 for await item in stream {
     print(item)
 }
+// 当外面取消了，可以这样结束数据
+self.continuation?.onTermination = { result in
+    print(result)
+    self.continuation = nil
+}
+// 读读这里的取消情况
+// https://www.donnywals.com/building-an-asyncsequence-with-asyncstream-makestream/
 
 
 

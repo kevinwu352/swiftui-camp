@@ -75,6 +75,10 @@ await model.runTest()
 try await Task.sleep(for: .seconds(0.1))
 
 
+// It's not the callsite that decides where a function runs. It's the function itself.
+// 这应该说的是一个异步函数，它在哪执行，靠的是它自己的声明，而不是调用它的场景
+// 同步函数肯定是在当前环境下执行
+
 // 如果我明确说明我要在主，才会在主上执行我
 // @MainActor
 func downloadData() async {
