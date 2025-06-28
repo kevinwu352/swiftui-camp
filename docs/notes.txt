@@ -105,6 +105,23 @@ class LoginSwitcher {
 
     //.clipShape(RoundedRectangle(cornerRadius: 20))
     //.shadow(color: .red, radius: 5) // 后加的阴影不会被切掉
+
+
+
+https://www.cnblogs.com/bruce2077/p/14911951.html
+diff 机制
+当子视图实现了 == 方法而不表明 Equatable 时，系统仍会用自己的 diff 方式，子视图明确表明自己 Equatable 才会用自定义的 ==
+如果子视图的 init 只有一个参数，即使表明 Equatable，也会用系统 diff
+    ChildView(i: i, name: "fat")
+    Button("i++") { i += 1 }
+EquatableView 的用法，某个自定义的 View 符合 Equatable 协议
+    EquatableView(content: WeatherView(weatherState: weatherState))
+    WeatherView(weatherState: weatherState, i: 1).equatable()
+个人感觉它的意义在于，自己定义子视图的比较，子视图可能有几个参数，我只比较某一些或一个，通过 == 方法，这样的话，其它属性的变化就不会导致此视图重建，相当于接管了 diff 模式的工作
+
+
+
+
 ========================================
 
 

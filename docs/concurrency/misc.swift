@@ -75,7 +75,7 @@ func doit() async {
         // let result = try await task.value
         // print("Result: \(result)")
         // 上面一定会异常，但如果这里不访问 task.value，就不会走到 catch 里面，直接是：222 和 Starting
-        // try await task.value 用于重新抛出 task 里面的异常，如果不访问则不会往外抛了
+        // try await task.value 用于重新抛出 task 里面的异常，如果不访问则不会往外抛了              <<<<<<<<<<<<<<<<<<<<
         print("222")
     } catch {
         print("Task was cancelled.")
@@ -111,7 +111,7 @@ func printUserDetails() async {
 
     let user = await UserData(name: username, friends: friends, highScores: scores)
     print("Hello, my name is \(user.name), and I have \(user.friends.count) friends!")
-    // 如果不等那三个 async let 的话，函数走到这里会取消那三个，但是如果那三个收到取消通知但不立即完成
+    // 如果不等那三个 async let 的话，函数走到这里会取消那三个，但是如果那三个收到取消通知但不立即完成。（注意 Task.sleep 在睡眠期间内部是会检查取消的）
     // 据说这里会继续等待它们完成。Donny Wals 说的，没验证
 }
 func getFriends() async -> [String] {
@@ -151,6 +151,7 @@ class User {
 @main
 struct App {
     static func main() async {
+        // Non-sendable result type 'User' cannot be sent from nonisolated context in call to async function
         async let user = User(name: "twostraws", password: "fr0st1es") // 这里出错
         await print(user.name)
     }
@@ -205,3 +206,12 @@ func refreshToken() async throws -> Token {
     self.refreshTask = task
     return try await task.value
 }
+
+
+// @preconcurrency
+// 5,minimal , 无就报错, 有就成功
+// 5,targeted, 无就报错, 有就成功
+// 5,complete, 无就报错，有就警告
+// 6,minimal , 有无都报错
+// 6,targeted, 有无都报错
+// 6,complete, 有无都报错

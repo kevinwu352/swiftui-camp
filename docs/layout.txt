@@ -20,6 +20,23 @@ Alignment Guide 很难，没太搞懂
 
 
 默认的 layout priority 是 0
+分配空间时，VStack/HStack 先满足非贪婪视图（Text），再在贪婪视图间比较优先级
+ZStack 里面包含几个视图，ZStack 的尺寸由优先级最高视图决定
+    ZStack(alignment: .topTrailing) {
+        Rectangle()
+            .foregroundStyle(.red.opacity(0.8))
+            .frame(width: 200, height: 200)
+            .layoutPriority(1)
+        Rectangle()
+            .foregroundStyle(.blue.opacity(0.8))
+            .frame(width: 100, height: 100)
+            .layoutPriority(2)
+        Rectangle()
+            .foregroundStyle(.orange.opacity(0.8))
+            .frame(width: 150, height: 150)
+            .layoutPriority(2)
+    }
+    .border(Color.black, width: 5)
 
 minWidth、idealWidth、maxWidth 一定要数值递增
 

@@ -18,6 +18,7 @@ struct ContentView: View {
         }
     }
 }
+// 注意：这两种写法创建的时候 vm 里面的 nam 能得到值。后续 View 重建时得到的新值不会再传给 vm
 
 
 struct ChildView: View {

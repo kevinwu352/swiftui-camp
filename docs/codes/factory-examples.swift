@@ -106,3 +106,30 @@ class Switcher {
     如果获取 B，还是旧的
 
 
+
+reset 功能
+reset 可以重置已经生成的对象，也就是清空 cache。也可以清空注册的东西
+
+Container.shared.router.reset() 这行代码，如果 router 有注册 Container.shared.router.register { @MainActor in Router() } ，会清空它，而用最原始声明时候的代码，如下
+public extension Container {
+    @MainActor
+    var router: Factory<Router> {
+        self { @MainActor in Router() }
+    }
+}
+也就是，如果原始文件中可能用的是占位的类 UserManagerPh，登录成功后用 UserManager，那么在它上面清空注册，再清空缓存，再获取对象，获取到的是 Ph
+
+
+Container.shared.manager.reset(options: .registration)
+这是清空所有的注册，但是已经获取的对象不会销毁，它们还存在内部缓存中
+Container.shared.manager.reset(options: .scope)
+再调用清空所有的域，这时候才会清空已获取的对象，下次再获取就是新的
+Container.shared.manager.reset()
+这会清空全部，注册和已获取的，还有其它的东西
+
+
+Container.shared.router.reset()
+这是清除具体的某个的全部
+Container.shared.manage.reset(.registration)
+Container.shared.manage.reset(.scope)
+这俩也是一样，一个清除注册，一个清除缓存

@@ -80,8 +80,8 @@ extension AsyncSequence {
 
 
 // AsyncStream 对应的是 continuation
-// continuation 把 completion 转化为 async 函数
-// AsyncStream 把 xxx 转化为异步序列
+//   continuation 把 completion 转化为 async 函数
+//   AsyncStream 把 xxx 转化为异步序列
 let stream = AsyncStream { continuation in
     for i in 1...9 {
         continuation.yield(i)
