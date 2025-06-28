@@ -41,12 +41,13 @@ func printMessage() async {
 //await printMessage()
 
 
+// 说的是任务1在等待前还是后抛出异常
 // 1) 先抛异常，用 waitForAll
-//   waitForAll 是等所有任务完成，某子任务先抛出异常，还是会等下去，不会马上结束
+//   waitForAll 是等所有任务完成，某子任务先抛出异常，还是会等下去，不会马上结束   <<<<<<<<<<
 //   其它子任务会正常结束，且 isCancelled 为 false，也就是先抛的异常根本没取消这个子任务
 //   我觉得是因为没有调 group.next() 获取值，如果获取值会获得子任务抛出的那个异常，并马上抛出，继而取消另外一个任务
 //   等待完成后，外层的 do catch 会收到子任务最开始抛出的异常
-//   牢记：try await group.waitForAll() 并不会抛出子任务发出的异常
+//   牢记：try await group.waitForAll() 并不会抛出子任务发出的异常  <<<<<<<<<<
 // 2) 先抛异常，用 next 读取值。。。马上就取消了
 //   调用 next，先读到的值是抛出的异常，所以继续往外抛，然后 do catch 收到异常就取消 group
 //   此时任务二还在 sleep，sleep 内部会检测是否 cancel，所以它马上不睡了，且抛出异常，后续的打印代码也不会执行了
